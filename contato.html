@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contato | ContaCerta</title>
+  <link rel="icon" href="imagens/marca.svg">
+  <link rel="stylesheet" href="css/estilo.css">
+  <script src="js/site.js" defer></script>
+</head>
+<body>
+  <a class="pular" href="#principal">Pular para o conteúdo</a>
+  <header><div class="limite faixa topo">
+    <a class="marca" href="index.html"><img src="imagens/marca.svg" width="36" height="36" alt="">contacerta</a>
+    <button class="menu" aria-expanded="false" aria-controls="navegacao" type="button">Menu ☰</button>
+    <nav id="navegacao" aria-label="Principal">
+      <a href="index.html">Início</a>
+      <a href="servicos.html">Serviços</a>
+      <a aria-current="page" href="contato.html">Contato</a>
+    </nav>
+    <a class="botao escuro atalho" href="contato.html#orcamento">Solicitar orçamento</a>
+  </div></header>
+  <main id="principal">
+    <section class="limite secao"><small>Vamos conversar</small><h1>O cuidado com suas contas<br>começa por aqui.</h1><p>Conte um pouco sobre você e o que seu negócio precisa.</p>
+      <div class="contato">
+        <aside class="atendimento"><h2>Pessoas de verdade.<br>Conversa sem complicação.</h2><h3>Horário de atendimento</h3><p>Segunda a sexta<br>Das 9h às 18h</p><h3>Atendimento digital</h3><p>Para pequenos negócios e autônomos.</p><button class="botao verde" id="abrir-chat" type="button">Conversar pelo WhatsApp</button></aside>
+        <form id="orcamento"><h2>Solicite seu orçamento</h2><p>Demonstração acadêmica. Use dados fictícios para simular o pedido.</p>
+          <div class="campos">
+            <label>Nome<input name="nome" required maxlength="100" autocomplete="name"></label>
+            <label>E-mail<input name="email" type="email" required autocomplete="email"></label>
+            <label>WhatsApp com DDD<input name="telefone" type="tel" required autocomplete="tel" placeholder="(63) 99999-0000"></label>
+            <label>Serviço de interesse<select name="servico" required><option value="">Selecione</option><option value="1">Abertura de empresa</option><option value="2">Gestão contábil</option><option value="3">Folha de pagamento</option><option value="4">Imposto de Renda</option></select></label>
+          </div>
+          <label>Como podemos ajudar?<textarea name="mensagem" rows="4" required maxlength="1000"></textarea></label>
+          <button class="botao escuro" type="submit">Simular solicitação →</button>
+        </form>
+        <section id="confirmacao" tabindex="-1" hidden><img src="imagens/marca.svg" alt="" width="36" height="36"><h2>Vamos cuidar do seu próximo passo.</h2><p id="resumo"></p><p>Simulação concluída. Os dados ficaram apenas nesta página.</p><button id="novo" class="botao verde" type="button">Nova solicitação</button></section>
+      </div>
+    </section>
+    <dialog aria-labelledby="titulo-chat"><h2 id="titulo-chat">Vamos conversar?</h2><p>O canal de WhatsApp será disponibilizado quando o escritório iniciar o atendimento. Por enquanto, experimente o formulário.</p><button class="botao verde" id="usar-formulario" type="button">Ir para o formulário</button> <button class="botao claro" id="fechar" type="button">Fechar</button></dialog>
+  </main>
+  <footer><div class="limite">
+    <div class="faixa"><a class="marca" href="index.html"><img src="imagens/marca.svg" width="36" height="36" alt="">contacerta</a><nav aria-label="Rodapé"><a href="index.html">Início</a>
+      <a href="servicos.html">Serviços</a>
+      <a href="contato.html">Contato</a></nav></div>
+    <p>Contabilidade próxima. Decisões mais claras.</p>
+    <small>© 2026 ContaCerta · Escritório fictício · Projeto acadêmico</small>
+  </div></footer>
+</body>
+</html>
+

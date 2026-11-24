@@ -1,0 +1,532 @@
+/* ContaCerta — folha de estilos compartilhada pelas três páginas.
+   Cada seletor indica onde aplicar as declarações entre chaves.
+   Uma classe começa com ponto e um identificador começa com #.
+   rem acompanha a fonte do elemento raiz; vw acompanha a largura da janela.
+   margin cria espaço externo e padding cria espaço interno. */
+
+/* ── Paleta e estilos gerais ── */
+
+/* A paleta fica no elemento raiz (html). As propriedades iniciadas por -- são herdadas pelas páginas e var() recupera a cor pelo nome. */
+:root {
+  --tinta: #122c3a;
+  --musgo: #315f41;
+  --lima: #c3ee94;
+  --papel: #f7f8f3;
+  --suave: #e9f3df;
+  --cinza: #52636c;
+}
+
+/* O asterisco seleciona todos os elementos. Com border-box, largura e altura já incluem o preenchimento e a borda. */
+* {
+  box-sizing: border-box;
+}
+
+/* Remove a margem padrão do navegador e define a aparência geral. Em font, 1rem é o tamanho da fonte e 1.5 é a altura de linha proporcional. As fontes seguintes são alternativas se Manrope estiver indisponível. */
+body {
+  margin: 0;
+  color: var(--tinta);
+  background: var(--papel);
+  font: 1rem/1.5 Manrope, "Segoe UI", Arial, sans-serif;
+}
+
+/* Os links herdam a cor do elemento pai. A distância de .25em separa o sublinhado das letras conforme o tamanho da fonte do próprio link. */
+a {
+  color: inherit;
+  text-underline-offset: .25em;
+}
+
+/* A pseudoclasse :hover sublinha o link quando o ponteiro está sobre ele. */
+a:hover {
+  text-decoration: underline;
+}
+
+/* Destaca o elemento que recebe foco, por exemplo ao usar Tab. O contorno externo não desloca os elementos vizinhos. */
+:focus-visible {
+  outline: 3px solid #2775ac;
+  outline-offset: 3px;
+}
+
+/* O link “Pular para o conteúdo” fica acima da área visível. position: absolute o retira do fluxo e z-index o coloca à frente do cabeçalho. */
+.pular {
+  position: absolute;
+  top: -5rem;
+  background: white;
+  padding: .75rem;
+  z-index: 2;
+}
+
+/* Quando o link recebe foco, top: 0 o traz para a tela. Pressionar Enter leva ao conteúdo principal. */
+.pular:focus {
+  top: 0;
+}
+
+/* ── Estrutura, navegação e botões ── */
+
+/* Limita o conteúdo ao menor valor entre 1200px e 86% da largura disponível. As margens laterais automáticas centralizam o bloco. */
+.limite {
+  width: min(1200px, 86%);
+  margin-inline: auto;
+}
+
+/* A vírgula agrupa seletores que compartilham o fundo branco, como os cartões de serviço e o formulário. */
+header, .publico, article, form, figure, dialog {
+  background: white;
+}
+
+/* Flexbox coloca os filhos em linha. align-items centraliza no eixo transversal e gap cria espaço apenas entre eles. */
+.faixa, nav, .marca, .acoes {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* Distribui o espaço livre entre os filhos, levando o primeiro e o último para as extremidades da faixa. */
+.faixa {
+  justify-content: space-between;
+}
+
+/* Reserva pelo menos 96px para o cabeçalho e permite que ele cresça se o conteúdo exigir. */
+.topo {
+  min-height: 96px;
+}
+
+/* No menu, clamp(mínimo, preferido, máximo) ajusta o espaço entre links. O valor preferido equivale a 3% da largura da janela. */
+nav {
+  gap: clamp(1rem, 3vw, 2.5rem);
+}
+
+/* Remove o sublinhado padrão dos links da navegação, da marca e dos links com aparência de botão. */
+nav a, .marca, .botao {
+  text-decoration: none;
+}
+
+/* Seleciona o link que o HTML identifica com aria-current. Cor verde e peso 700 indicam a página atual. */
+nav a[aria-current] {
+  color: var(--musgo);
+  font-weight: 700;
+}
+
+/* Formata o nome da marca em negrito, aproxima suas letras e reduz a distância entre o símbolo e a palavra. */
+.marca {
+  font-size: 1.5rem;
+  font-weight: 700;
+  gap: .6rem;
+  letter-spacing: -.04em;
+}
+
+/* Cria uma base comum para os botões. inline-flex centraliza o conteúdo, min-height amplia a área clicável e padding dá espaço ao texto. A borda transparente já reserva espaço para a versão clara. */
+.botao, .menu {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: .75rem 1.45rem;
+  border-radius: .65rem;
+  border: 1px solid transparent;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+}
+
+/* Ao apontar para o botão, o brilho cai para 94%. Links com classe de botão continuam sem sublinhado nesse estado. */
+.botao:hover {
+  filter: brightness(.94);
+  text-decoration: none;
+}
+
+/* Aplica a combinação de fundo azul-escuro e texto branco ao botão escuro e às seções de chamada e atendimento. */
+.escuro, .chamada, .atendimento {
+  background: var(--tinta);
+  color: white;
+}
+
+/* Destaca a ação principal com o verde-lima da marca e texto escuro. */
+.verde {
+  background: var(--lima);
+  color: var(--tinta);
+}
+
+/* Usa fundo branco e contorno visível para a ação secundária e para o botão do menu móvel. */
+.claro, .menu {
+  background: white;
+  color: var(--tinta);
+  border-color: #d5ded2;
+}
+
+/* Em telas largas, os links já ficam à vista e o botão Menu fica oculto. A regra para celular aparece ao final. */
+.menu {
+  display: none;
+}
+
+/* ── Hierarquia de textos ── */
+
+/* Padroniza a distância entre linhas e letras dos títulos. A margem fica somente abaixo deles. */
+h1, h2, h3 {
+  line-height: 1.13;
+  letter-spacing: -.035em;
+  margin: 0 0 1rem;
+}
+
+/* O título principal cresce com a janela dentro dos limites de 2.45rem e 4.4rem. */
+h1 {
+  font-size: clamp(2.45rem, 4.8vw, 4.4rem);
+}
+
+/* O título de seção usa a mesma técnica em uma escala menor para manter a hierarquia visual. */
+h2 {
+  font-size: clamp(1.6rem, 2.8vw, 2.3rem);
+}
+
+/* O terceiro nível identifica assuntos dentro de uma seção, como o título de um cartão. */
+h3 {
+  font-size: 1.45rem;
+}
+
+/* Define margens acima, nos lados e abaixo dos parágrafos, nessa ordem. O espaço maior após o texto separa o próximo elemento. */
+p {
+  margin: .6rem 0 1.4rem;
+}
+
+/* Dá mais tamanho ao texto descritivo. Em .secao > p, o sinal > restringe a regra aos parágrafos que são filhos diretos da seção. */
+.hero p, article p, form p, .secao > p {
+  color: var(--cinza);
+  font-size: 1.1rem;
+}
+
+/* Aplica uma cor secundária aos textos complementares marcados com small. */
+small {
+  color: var(--cinza);
+}
+
+/* ── Abertura da página inicial ── */
+
+/* Na abertura da página, Grid coloca a apresentação e o painel lado a lado. A primeira coluna recebe 1,05 parte do espaço livre e a segunda recebe 1 parte. O espaçamento acompanha a largura da tela. */
+.hero {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+  padding-block: clamp(2rem, 4.5vw, 4rem);
+}
+
+/* Limita a linha do título a 14ch, medida baseada na largura do algarismo zero da fonte. line-height: 1 aproxima as linhas do título grande. */
+.hero h1 {
+  max-width: 14ch;
+  font-size: clamp(3rem, 5.2vw, 5rem);
+  line-height: 1;
+}
+
+/* Exibe os rótulos em letras maiúsculas com espaçamento entre letras. O texto no HTML mantém a grafia original. */
+.etiqueta, .secao > small, figure small, .publico small {
+  text-transform: uppercase;
+  font-size: .8rem;
+  letter-spacing: .03em;
+}
+
+/* Dá à etiqueta um fundo suave e cantos arredondados. inline-block permite aplicar preenchimento ao redor de um rótulo que acompanha a largura do texto. */
+.etiqueta {
+  display: inline-block;
+  color: var(--musgo);
+  background: var(--suave);
+  border-radius: 2rem;
+  padding: .6rem .9rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Os botões de orçamento e serviços passam para a linha seguinte se faltar espaço. margin-block separa o grupo do texto acima e abaixo. */
+.acoes {
+  flex-wrap: wrap;
+  margin-block: 1.35rem;
+  gap: .7rem;
+}
+
+/* ── Painel e gráfico ilustrativo ── */
+
+/* Compartilha cantos arredondados e preenchimento interno adaptável entre o painel, os cartões, o formulário e a confirmação. */
+.painel, article, form, .atendimento, #confirmacao {
+  padding: clamp(1.25rem, 2.5vw, 2.2rem);
+  border-radius: 1.25rem;
+}
+
+/* Distingue o painel financeiro da área ao redor com o verde suave da paleta. */
+.painel {
+  background: var(--suave);
+}
+
+/* Coloca o título do painel e o indicador circular na mesma linha, um em cada extremidade. */
+.painel h2 {
+  font-size: 1.55rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Atinge somente o span dentro do título do painel e dá ao indicador tamanho e cor próprios. */
+.painel h2 span {
+  color: var(--musgo);
+  font-size: 1rem;
+}
+
+/* O elemento figure envolve o gráfico. A margem o separa do restante do painel e o padding afasta as barras das bordas. */
+figure {
+  margin: 1.4rem 0;
+  padding: 1.5rem;
+  border-radius: 1.1rem;
+}
+
+/* Separa o título “Clareza para decidir” do pequeno rótulo acima dele. */
+figure h3 {
+  margin-top: .85rem;
+}
+
+/* Cria seis colunas iguais, uma por mês. repeat(6, 1fr) repete seis vezes uma fração do espaço disponível após descontar os intervalos. */
+.grafico {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: .65rem;
+  height: clamp(110px, 13vw, 175px);
+}
+
+/* Cada mês usa Flexbox vertical para empilhar barra e legenda. justify-content: end alinha os conjuntos pela base, mesmo com barras de alturas diferentes. */
+.grafico div {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  gap: .4rem;
+  font-size: .72rem;
+  color: var(--cinza);
+}
+
+/* O elemento i forma a barra. Cada mês define --altura no HTML e a barra herda esse percentual para desenhar o valor ilustrativo. */
+.grafico i {
+  background: var(--lima);
+  height: var(--altura);
+  border-radius: .45rem;
+}
+
+/* :last-child identifica o último mês do gráfico e destaca apenas a barra de junho em verde escuro. */
+.grafico div:last-child i {
+  background: var(--musgo);
+}
+
+/* Remove os marcadores e o recuo padrão da lista de vantagens para usar a apresentação visual do painel. */
+.vantagens {
+  list-style: none;
+  padding: 0;
+  color: var(--musgo);
+  font-weight: 600;
+}
+
+/* Separa verticalmente os itens da lista, sem adicionar margens laterais. */
+.vantagens li {
+  margin: .65rem 0;
+}
+
+/* O pseudoelemento ::before insere um sinal de visto antes do texto de cada vantagem. */
+.vantagens li::before {
+  content: "✓ ";
+}
+
+/* ── Seções, cartões e rodapé ── */
+
+/* Adiciona espaço acima e abaixo da faixa que apresenta os públicos atendidos. */
+.publico {
+  padding: 1.55rem 0;
+}
+
+/* Define um espaçamento vertical comum para seções e rodapé. padding-block atua nas bordas superior e inferior nesta página. */
+.secao, .chamada, footer {
+  padding-block: clamp(2rem, 5vw, 4.5rem);
+}
+
+/* Trata como bloco o rótulo diretamente dentro da seção para separá-lo do título seguinte. */
+.secao > small {
+  display: block;
+  color: var(--musgo);
+  margin-bottom: 1.1rem;
+}
+
+/* Define Grid e a distância entre células. Cada grupo recebe a sua quantidade de colunas nas regras seguintes. */
+.cards, .catalogo, .contato, .campos {
+  display: grid;
+  gap: 1.35rem;
+}
+
+/* Mostra os três benefícios lado a lado, cada um com uma coluna da mesma largura. */
+.cards {
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 1.6rem;
+}
+
+/* Organiza catálogo e campos em duas colunas iguais. minmax(0, 1fr) permite que as colunas encolham mesmo quando um conteúdo interno tem largura preferida maior. */
+.catalogo, .campos {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* Separa os blocos de catálogo e contato dos respectivos textos de introdução. */
+.catalogo, .contato {
+  margin-top: 2.5rem;
+}
+
+/* Transforma o número em destaque de cada cartão em um bloco próprio, antes do título. */
+article strong {
+  display: block;
+  color: var(--musgo);
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+/* Retira a margem inferior do parágrafo quando ele termina o cartão e também dos parágrafos da faixa de chamada. */
+article p:last-child, .chamada p {
+  margin-bottom: 0;
+}
+
+/* Limita a largura do título da chamada para que a frase quebre em linhas legíveis. */
+.chamada h2 {
+  max-width: 29ch;
+}
+
+/* Diferencia o rodapé do restante da página com fundo escuro e texto branco. */
+footer {
+  background: #0b202a;
+  color: white;
+}
+
+/* Usa um cinza claro para que a informação complementar permaneça legível sobre o fundo escuro. */
+footer small {
+  color: #d1dcd9;
+}
+
+/* ── Contato, formulário e diálogo ── */
+
+/* Divide a área de contato em quatro partes para o atendimento e seis para o formulário. align-items: start alinha pelo topo sem igualar as alturas. */
+.contato {
+  grid-template-columns: 4fr 6fr;
+  align-items: start;
+}
+
+/* Destaca os subtítulos do atendimento, como horário e canal digital. A margem superior separa os assuntos. */
+.atendimento h3 {
+  color: var(--lima);
+  font-size: .9rem;
+  margin: 2rem 0 .5rem;
+}
+
+/* Como o campo está dentro de label no HTML, o Grid coloca seu controle abaixo do texto e gap separa os dois. */
+label {
+  display: grid;
+  gap: .45rem;
+  font-weight: 600;
+}
+
+/* Permite que os controles ocupem a coluna e encolham com ela. font: inherit mantém a tipografia da página, e padding e border delimitam a área de digitação. */
+input, select, textarea {
+  width: 100%;
+  min-width: 0;
+  font: inherit;
+  color: var(--tinta);
+  padding: .75rem;
+  border: 1px solid #829087;
+  border-radius: .5rem;
+  background: white;
+}
+
+/* Permite aumentar a caixa de mensagem apenas na vertical para preservar a largura do formulário. */
+textarea {
+  resize: vertical;
+}
+
+/* Afasta a mensagem e o botão de envio do grupo anterior. O combinador > considera apenas filhos diretos do formulário. */
+form > label, form > button {
+  margin-top: 1.2rem;
+}
+
+/* O seletor com # identifica a seção de confirmação pelo seu id. O CSS define a cor, enquanto o JavaScript controla quando ela aparece. */
+#confirmacao {
+  background: var(--suave);
+}
+
+/* Separa o ícone de confirmação do título logo abaixo. */
+#confirmacao img {
+  margin-bottom: 1rem;
+}
+
+/* Limita o diálogo de atendimento a 32rem ou 90% da largura da janela, o que for menor. O preenchimento e os cantos arredondados formam a caixa. */
+dialog {
+  max-width: min(32rem, 90vw);
+  padding: 2rem;
+  border: 0;
+  border-radius: 1rem;
+  color: var(--tinta);
+}
+
+/* ::backdrop estiliza a camada atrás do diálogo modal. Os dois últimos dígitos da cor hexadecimal controlam a transparência. */
+dialog::backdrop {
+  background: #0b202a99;
+}
+
+/* ── Adaptação para celular ── */
+
+/* Estas regras valem quando a área de exibição tem até 760px, inclusive. Elas complementam as regras anteriores e modificam apenas as propriedades declaradas aqui. */
+@media (max-width: 760px) {
+
+  /* Aumenta a largura relativa do conteúdo de 86% para 90%, aproveitando melhor a tela estreita. */
+  .limite {
+    width: 90%;
+  }
+
+  /* Permite que a navegação ocupe uma segunda linha e reduz a altura mínima do cabeçalho. */
+  .topo {
+    flex-wrap: wrap;
+    min-height: 76px;
+    padding-block: .8rem;
+  }
+
+  /* Exibe o botão Menu para que o visitante possa abrir e fechar a navegação. */
+  .menu {
+    display: inline-flex;
+  }
+
+  /* Oculta inicialmente os links no cabeçalho móvel e reserva a largura total para eles quando forem exibidos. */
+  .topo nav {
+    display: none;
+    width: 100%;
+  }
+
+  /* Ao clicar em Menu, o JavaScript alterna a classe aberto no próprio nav. Quando ela está presente, display: grid mostra os links empilhados. */
+  .topo nav.aberto {
+    display: grid;
+  }
+
+  /* Aumenta a área vertical de toque de cada link do menu. */
+  .topo nav a {
+    padding: .6rem 0;
+  }
+
+  /* Oculta o atalho de orçamento do cabeçalho para liberar espaço ao lado da marca e do menu. */
+  .topo .atalho {
+    display: none;
+  }
+
+  /* Troca as colunas de desktop por uma coluna única. A apresentação passa a ficar acima do painel e os campos passam a aparecer um abaixo do outro. */
+  .hero, .contato, .cards, .catalogo, .campos {
+    grid-template-columns: 1fr;
+  }
+
+  /* Permite que os itens dessas faixas quebrem de linha quando o espaço horizontal for insuficiente. */
+  .publico .faixa, footer .faixa, .chamada .faixa, .secao > .faixa {
+    flex-wrap: wrap;
+  }
+
+  /* Para a faixa de públicos, usa uma grade de duas colunas iguais e distribui os quatro textos em duas linhas. */
+  .publico .faixa {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Ajusta o título de abertura à largura do celular e limita seu tamanho para preservar a leitura. */
+  .hero h1 {
+    font-size: clamp(2.5rem, 10vw, 4rem);
+  }
+}
